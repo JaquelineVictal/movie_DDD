@@ -1,19 +1,21 @@
 import { IMovieEntity } from '../../../../domain/entities/movie/movie.entity.interface';
 
-export default function (movie: any): IMovieEntity | undefined {
+export default function (movie: any): IMovieEntity| undefined {
   if (!movie) return;
 
-  const userGeneralMovieGenre: any = {
+  const userGeneralMovie: IMovieEntity = {
     id: movie.id,
-    movieId: movie.movie_id,
-    genreId: movie.genre_id,
+    title: movie.title,
+    dateRelease: movie.date_release,
+    runTime: movie.run_time,
   };
 
   if (movie.logado) {
-    userGeneralMovieGenre.id = movie.id;
-    userGeneralMovieGenre.movieId = movie.movie_id;
-    userGeneralMovieGenre.genreId = movie.genre_id;
+    (userGeneralMovie as IMovieEntity).id = movie.id;
+    (userGeneralMovie as IMovieEntity).title = movie.title;
+    (userGeneralMovie as IMovieEntity).dateRelease = movie.date_release;
+    (userGeneralMovie as IMovieEntity).runTime = movie.run_time;
   }
 
-  return userGeneralMovieGenre;
+  return userGeneralMovie as IMovieEntity;
 }

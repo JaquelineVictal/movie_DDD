@@ -1,5 +1,8 @@
-export interface IDirectorEntity {
+export interface IMovieDirectorEntity {
   id?: number;
-  directorName: string;
   movieId: number;
+}
+
+export interface IDirectorEntity extends IMovieDirectorEntity {
+  directorName: string;
 }
