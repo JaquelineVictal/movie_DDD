@@ -3,6 +3,11 @@ export interface IMovieGenreEntity {
   movieId: number;
 }
 
+export interface IGenre {
+  id?: number;
+  genreName: string;
+}
+
 export interface IGenreEntity extends IMovieGenreEntity {
   genreName: string;
 }
