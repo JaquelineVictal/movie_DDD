@@ -5,7 +5,9 @@ import { IMovieDirectorRepository } from '../../repositories/movieDirector.repos
 
 class CreateMovieDirectorUsecase implements IUseCase {
   constructor(private _repository: IMovieDirectorRepository) {}
-  async execute(data: IMovieDirectorEntity): Promise<IMovieDirectorEntity | undefined> {
+  async execute(
+    data: IMovieDirectorEntity
+  ): Promise<IMovieDirectorEntity | undefined> {
     return await this._repository.create(data);
   }
 }
