@@ -10,9 +10,7 @@ export interface IMovieDirectorRepository {
     resource: IMovieDirectorEntity
   ): Promise<IMovieDirectorEntity | undefined>;
   deletedByMovieId(dataWhere: any): Promise<void>;
-  findAll(
-    resourceFilter: IMovieDirectorFilter
-  ): Promise<(IMovieDirectorEntity | undefined)[]>;
+  findAll(resourceFilter: any): Promise<(IMovieDirectorEntity | undefined)[]>;
   updateById(
     id: number | undefined,
     resource: IMovieDirectorEntity

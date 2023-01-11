@@ -35,9 +35,7 @@ export class MoviesRepository implements IMovieRepository {
     await this._database.delete(this._modelMovies, { id: resourceId });
   }
 
-  async findAll(
-    resourceFilter: IMovieFilter
-  ): Promise<(MovieEntity | undefined)[]> {
+  async findAll(resourceFilter: any): Promise<(MovieEntity | undefined)[]> {
     const movie = await this._database.list(this._modelMovies, resourceFilter);
     const movies = movie.map(modelstoEntities);
     return movies;

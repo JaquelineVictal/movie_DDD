@@ -38,7 +38,7 @@ export class MovieGenreRepository implements IMovieGenreRepository {
   }
 
   async findAll(
-    resourceFilter: IMovieGenreFilter
+    resourceFilter: any
   ): Promise<(IMovieGenreEntity | undefined)[]> {
     const genre = await this._database.list(this._modelGenres, resourceFilter);
     const genres = genre.map(modelstoEntities);

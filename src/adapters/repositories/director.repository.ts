@@ -44,9 +44,7 @@ export class DirectorRepository implements IDirectorRepository {
     await this._database.delete(this._modelDirectors, { id: resourceId });
   }
 
-  async findAll(
-    resourceFilter: IDirectorFilter
-  ): Promise<(IDirector | undefined)[]> {
+  async findAll(resourceFilter: any): Promise<(IDirector | undefined)[]> {
     const director = await this._database.list(
       this._modelDirectors,
       resourceFilter

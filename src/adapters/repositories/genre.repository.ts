@@ -38,7 +38,7 @@ export class GenreRepository implements IGenreRepository {
     await this._database.delete(this._modelGenres, { id: resourceId });
   }
 
-  async findAll(resourceFilter: IGenreFilter): Promise<(IGenre | undefined)[]> {
+  async findAll(resourceFilter: any): Promise<(IGenre | undefined)[]> {
     const genre = await this._database.list(this._modelGenres, resourceFilter);
     const genres = genre.map(modelstoEntities);
     return genres;

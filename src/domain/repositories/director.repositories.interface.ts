@@ -8,7 +8,7 @@ export interface IDirectorRepository {
   getById(directorId: number): Promise<IDirector | undefined>;
   create(resource: IDirector): Promise<IDirector | undefined>;
   deletedById(resourceId: number): Promise<void>;
-  findAll(resourceFilter: IDirectorFilter): Promise<(IDirector | undefined)[]>;
+  findAll(resourceFilter: any): Promise<(IDirector | undefined)[]>;
   updateById(
     id: number | undefined,
     resource: IDirector

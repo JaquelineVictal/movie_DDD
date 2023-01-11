@@ -11,7 +11,7 @@ export class PrismaDatabase implements IDatabaseModel {
     return PrismaDatabase._instance;
   }
 
-  create(model: any, data: any): any {
+  async create(model: any, data: any): any {
     return model.create(data);
   }
 
@@ -20,7 +20,7 @@ export class PrismaDatabase implements IDatabaseModel {
     return model.save();
   }
 
-  list(model: any, includes: object): any {
+  async list(model: any, includes: object): any {
     return model.findMany(includes);
   }
 
@@ -32,7 +32,7 @@ export class PrismaDatabase implements IDatabaseModel {
     return result > 0;
   }
 
-  readById(model: any, dataId: any): any {
+  async readById(model: any, dataId: any): any {
     try {
       return model.findFirst({
         where: dataId,

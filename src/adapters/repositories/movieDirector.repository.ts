@@ -49,7 +49,7 @@ export class MovieDirectorRepository implements IMovieDirectorRepository {
   }
 
   async findAll(
-    resourceFilter: IMovieDirectorFilter
+    resourceFilter: any
   ): Promise<(IMovieDirectorEntity | undefined)[]> {
     const director = await this._database.list(
       this._modelDirectors,
