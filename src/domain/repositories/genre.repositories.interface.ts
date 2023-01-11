@@ -4,10 +4,10 @@ export interface IGenreFilter {
   genreName: string[];
 }
 
-export interface IMovieRepository {
-  getByGenreId(genreId: number): Promise<IGenre | undefined>;
+export interface IGenreRepository {
+  getById(genreId: number): Promise<IGenre | undefined>;
   create(resource: IGenre): Promise<IGenre | undefined>;
-  deletedByGenreId(resourceId: number): Promise<void>;
+  deletedById(resourceId: number): Promise<void>;
   findAll(resourceFilter: IGenreFilter): Promise<(IGenre | undefined)[]>;
   updateById(
     id: number | undefined,

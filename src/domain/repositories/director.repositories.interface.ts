@@ -4,10 +4,10 @@ export interface IDirectorFilter {
   directorName: string[];
 }
 
-export interface IMovieRepository {
-  getByDirectorId(directorId: number): Promise<IDirector | undefined>;
+export interface IDirectorRepository {
+  getById(directorId: number): Promise<IDirector | undefined>;
   create(resource: IDirector): Promise<IDirector | undefined>;
-  deletedByDirectorId(resourceId: number): Promise<void>;
+  deletedById(resourceId: number): Promise<void>;
   findAll(resourceFilter: IDirectorFilter): Promise<(IDirector | undefined)[]>;
   updateById(
     id: number | undefined,

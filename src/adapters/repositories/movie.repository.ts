@@ -1,51 +1,59 @@
 import { IDatabaseModel } from '../../infrastructure/persistence/database.model.interface';
 import { PrismaDatabase } from '../../infrastructure/persistence/postgres.prisma/Prisma.Database';
-import { UserEntity } from '../../domain/entities/users/users.entity';
-import { IUsersRepository } from '../../domain/repositories/users.repositories.interface';
+import { MovieEntity } from '../../domain/entities/movie/movie.entity';
+import { IMovieFilter, IMovieRepository } from '../../domain/repositories/movie.repositories.interface';
 import {
   MoviesPrismaModel,
   prisma,
-} from "../../infrastructure/persistence/postgres.prisma/models/PrismaClient.Model";
-import modelstoEntities from '../../infrastructure/persistence/postgres.prisma/helpers/users.modelstoEntities.prisma.DB';
-import entitiestoModel from '../../infrastructure/persistence/postgres.prisma/helpers/users.entitiestoModel.prisma.DB';
+} from '../../infrastructure/persistence/postgres.prisma/models/PrismaClient.Model';
+import modelstoEntities from '../../infrastructure/persistence/postgres.prisma/helpers/movie.modelstoEntities.prisma.DB';
+import entitiestoModel from '../../infrastructure/persistence/postgres.prisma/helpers/movie.entitiestoModel.prisma.DB';
 
-export class UsersRepository implements IUsersRepository {
+export class MoviesRepository implements IMovieRepository {
   constructor(private _database: IDatabaseModel, private _modelMovies: any) {}
 
-  async getById(resourceId: number): Promise<UserEntity | undefined> {
+  async getById(resourceId: number): Promise<MovieEntity | undefined> {
     try {
-      const user = await this._database.readById(this._modelMovies, resourceId);
-      return modelstoEntities(user);
+      const movie = await this._database.readById(
+        this._modelMovies,
+        resourceId
+      );
+      return modelstoEntities(movie);
     } catch (error) {
       console.error(error);
     }
   }
 
-  async create(resource: UserEntity): Promise<UserEntity | undefined> {
-    const { userGeneral } = entitiestoModel(resource);
-    const user = await this._database.create(this._modelMovies, userGeneral);
-    console.log(modelstoEntities(user));
-    return modelstoEntities(user);
+  async create(resource: MovieEntity): Promise<MovieEntity | undefined> {
+    const { movieGeneral } = entitiestoModel(resource);
+    const movie = await this._database.create(this._modelMovies, movieGeneral);
+    console.log(modelstoEntities(movie));
+    return modelstoEntities(movie);
   }
 
   async deletedById(resourceId: number): Promise<void> {
-    await this._database.delete(this._modelMovies, { idUser: resourceId });
+    await this._database.delete(this._modelMovies, { id: resourceId });
   }
 
-  async findAll(resourceFilter): Promise<(UserEntity | undefined)[]> {
-    const user = await this._database.list(this._modelMovies,resourceFilter);
-    const clients = user.map(modelstoEntities);
-    return clients;
+  async findAll(
+    resourceFilter: IMovieFilter
+  ): Promise<(MovieEntity | undefined)[]> {
+    const movie = await this._database.list(this._modelMovies, resourceFilter);
+    const movies = movie.map(modelstoEntities);
+    return movies;
   }
 
   async updateById(
-    idUser: number,
-    resource: UserEntity
-  ): Promise<UserEntity | undefined> {
-    const { userGeneral } = entitiestoModel(resource);
-    const data = { where: { idUser }, userGeneral };
-    const user = await this._database.update(this._modelMovies, data);
-    return modelstoEntities(user);
+    id: number,
+    resource: MovieEntity
+  ): Promise<MovieEntity | undefined> {
+    const { movieGeneral } = entitiestoModel(resource);
+    const data = { where: { id }, movieGeneral };
+    const movie = await this._database.update(this._modelMovies, data);
+    return modelstoEntities(movie);
   }
 }
-export default new UsersRepository(PrismaDatabase.getInstance(), prisma.users);
+export default new MoviesRepository(
+  PrismaDatabase.getInstance(),
+  prisma.movies
+);

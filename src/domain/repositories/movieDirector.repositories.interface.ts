@@ -4,14 +4,12 @@ export interface IMovieDirectorFilter {
   directorId: number[];
 }
 
-export interface IMovieRepository {
-  getByDirectorId(
-    directorId: number
-  ): Promise<IMovieDirectorEntity | undefined>;
+export interface IMovieDirectorRepository {
+  getByMovieId(dataWhere: any): Promise<IMovieDirectorEntity | undefined>;
   create(
     resource: IMovieDirectorEntity
   ): Promise<IMovieDirectorEntity | undefined>;
-  deletedByDirectorId(resourceId: number): Promise<void>;
+  deletedByMovieId(dataWhere: any): Promise<void>;
   findAll(
     resourceFilter: IMovieDirectorFilter
   ): Promise<(IMovieDirectorEntity | undefined)[]>;
