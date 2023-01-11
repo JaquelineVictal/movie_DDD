@@ -1,71 +1,71 @@
 import { IDatabaseModel } from '../../infrastructure/persistence/database.model.interface';
 import { PrismaDatabase } from '../../infrastructure/persistence/postgres.prisma/Prisma.Database';
 import {
-  MovieDirectorsPrismaModel,
+  DirectorsPrismaModel,
   prisma,
 } from '../../infrastructure/persistence/postgres.prisma/models/PrismaClient.Model';
-import modelstoEntities from '../../infrastructure/persistence/postgres.prisma/helpers/movieDirector.modelstoEntities.prisma.DB';
-import entitiestoModel from '../../infrastructure/persistence/postgres.prisma/helpers/movieDirector.entitiestoModel.prisma.DB';
-import { IMovieDirector } from '../../domain/entities/movieDirector/movieDirector.entity.interface';
+import modelstoEntities from '../../infrastructure/persistence/postgres.prisma/helpers/director.modelstoEntities.prisma.DB';
+import entitiestoModel from '../../infrastructure/persistence/postgres.prisma/helpers/director.entitiestoModel.prisma.DB';
+import { IDirector } from '../../domain/entities/director/director.entity.interface';
 import {
-  IMovieDirectorFilter,
-  IMovieDirectorRepository,
-} from '../../domain/repositories/movieDirector.repositories.interface';
+  IDirectorFilter,
+  IDirectorRepository,
+} from '../../domain/repositories/director.repositories.interface';
 
-export class MovieDirectorRepository implements IMovieDirectorRepository {
+export class DirectorRepository implements IDirectorRepository {
   constructor(
     private _database: IDatabaseModel,
-    private _modelMovieDirectors: any
+    private _modelDirectors: any
   ) {}
 
-  async getByMovieId(resourceId: number): Promise<IMovieDirector | undefined> {
+  async getById(resourceId: number): Promise<IDirector | undefined> {
     try {
-      const movieDirector = await this._database.list(
-        this._modelMovieDirectors,
+      const director = await this._database.readById(
+        this._modelDirectors,
         resourceId
       );
-      return modelstoEntities(movieDirector);
+      return modelstoEntities(director);
     } catch (error) {
       console.error(error);
     }
   }
 
-  async create(resource: IMovieDirector): Promise<IMovieDirector | undefined> {
-    const { movieDirectorGeneral } = entitiestoModel(resource);
-    const movieDirector = await this._database.create(
-      this._modelMovieDirectors,
-      movieDirectorGeneral
+  async create(resource: IDirector): Promise<IDirector | undefined> {
+    const { directorGeneral } = entitiestoModel(resource);
+    const director = await this._database.create(
+      this._modelDirectors,
+      directorGeneral
     );
-    console.log(modelstoEntities(movieDirector));
-    return modelstoEntities(movieDirector);
+    console.log(modelstoEntities(director));
+    return modelstoEntities(director);
   }
 
   async deletedById(resourceId: number): Promise<void> {
-    await this._database.delete(this._modelMovieDirectors, { id: resourceId });
+    await this._database.delete(this._modelDirectors, { id: resourceId });
   }
 
   async findAll(
-    resourceFilter: IMovieDirectorFilter
-  ): Promise<(IMovieDirector | undefined)[]> {
-    const movieDirector = await this._database.list(
-      this._modelMovieDirectors,
+    resourceFilter: IDirectorFilter
+  ): Promise<(IDirector | undefined)[]> {
+    const director = await this._database.list(
+      this._modelDirectors,
       resourceFilter
     );
-    const movieDirectors = movieDirector.map(modelstoEntities);
-    return movieDirectors;
+    const directors = director.map(modelstoEntities);
+    return directors;
   }
 
   async updateById(
     id: number,
-    resource: IMovieDirector
-  ): Promise<IMovieDirector | undefined> {
-    const { movieDirectorGeneral } = entitiestoModel(resource);
-    const data = { where: { id }, movieDirectorGeneral };
-    const movieDirector = await this._database.update(this._modelMovieDirectors, data);
-    return modelstoEntities(movieDirector);
+    resource: IDirector
+  ): Promise<IDirector | undefined> {
+    const { directorGeneral } = entitiestoModel(resource);
+    const data = { where: { id }, directorGeneral };
+    const director = await this._database.update(this._modelDirectors, data);
+    return modelstoEntities(director);
   }
 }
-export default new MovieDirectorRepository(
+export default new DirectorRepository(
   PrismaDatabase.getInstance(),
-  prisma.movieDirectors
+  prisma.directors
 );
